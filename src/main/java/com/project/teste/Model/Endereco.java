@@ -12,36 +12,33 @@ import javax.persistence.Table;
 @Table(name = "ENDERECO")
 public class Endereco extends AbstractEntity<Long> {
 
-
-
 	@Column(nullable = false, unique = false)
-	private String logradouro;	
+	private String logradouro;
 
 	@Column(nullable = false, unique = false)
 	private String numero;
-	
+
 	@Column(nullable = false, unique = false)
 	private String complemento;
-	
+
 	@Column(nullable = false, unique = false)
 	private String bairro;
-	
+
 	@Column(nullable = false, unique = false)
 	private String cidade;
-	
+
 	@Column(nullable = false, unique = false)
 	private String estado;
-	
+
 	@Column(nullable = false, unique = false)
 	private String cep;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "usuario_id_fk")
 	private Usuario usuario;
-	
-	
+
 	public Endereco(String logradouro, String numero, String complemento, String bairro, String localidade, String uf,
-			        String cep, Usuario usuario) {
+			String cep, Usuario usuario) {
 		super();
 		this.logradouro = logradouro;
 		this.numero = numero;
@@ -52,10 +49,7 @@ public class Endereco extends AbstractEntity<Long> {
 		this.cep = cep;
 		this.usuario = usuario;
 	}
-	
-	
-	
-	
+
 	public String getLogradouro() {
 		return logradouro;
 	}
@@ -120,6 +114,4 @@ public class Endereco extends AbstractEntity<Long> {
 		this.usuario = usuario;
 	}
 
-	
-		
 }

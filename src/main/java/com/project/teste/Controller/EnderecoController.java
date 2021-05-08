@@ -15,47 +15,41 @@ import com.project.teste.Interface.iEnderecoService;
 import com.project.teste.Model.Endereco;
 import com.project.teste.Service.EnderecoService;
 
-
-
-
 @RestController
 @RequestMapping("/endereco")
 public class EnderecoController {
-	
-	
+
 	Endereco endereco;
 
 	@Autowired
-    private iEnderecoService cepService;
-	
+	private iEnderecoService cepService;
+
 	@SuppressWarnings("unused")
 	@Autowired
-    private EnderecoService service;
-	
-	
+	private EnderecoService service;
+
 	@PostMapping("/cadastrar")
-    public String cadastrar(@RequestHeader("cep")String cep, @RequestHeader("complemento")String complemento, @RequestHeader("numero")String numero){
+	public String cadastrar(@RequestHeader("cep") String cep, @RequestHeader("complemento") String complemento,
+			@RequestHeader("numero") String numero) {
 		Endereco endereco = cepService.buscarPeloCep(cep);
-		if(endereco != null) {
-		   endereco.setNumero(numero);
-	       endereco.setComplemento(complemento);
-		}
-		else {
+		if (endereco != null) {
+			endereco.setNumero(numero);
+			endereco.setComplemento(complemento);
+		} else {
 			return null;
-		}		
-		
-        return endereco.getCep();
+		}
+		return endereco.getCep();
 	}
-	
 
-    @GetMapping("/getCep")
-    public ResponseEntity<Endereco> getCep(@RequestHeader("cep")String cep, @RequestHeader("complemento")String complemento, @RequestHeader("numero")String numero) {
+	@GetMapping("/getCep")
+	public ResponseEntity<Endereco> getCep(@RequestHeader("cep") String cep,
+			@RequestHeader("complemento") String complemento, @RequestHeader("numero") String numero) {
 
-        Endereco endereco = cepService.buscarPeloCep(cep);
-        endereco.setNumero(numero);
-        endereco.setComplemento(complemento);
+		Endereco endereco = cepService.buscarPeloCep(cep);
+		endereco.setNumero(numero);
+		endereco.setComplemento(complemento);
 
-    return endereco != null ? ResponseEntity.ok().body(endereco) : ResponseEntity.notFound().build(); 
-   
-    }
+		return endereco != null ? ResponseEntity.ok().body(endereco) : ResponseEntity.notFound().build();
+
+	}
 }

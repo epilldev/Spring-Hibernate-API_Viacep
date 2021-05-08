@@ -14,18 +14,17 @@ import com.project.teste.Service.UsuarioService;
 public class UsuarioController {
 
 	Usuario usuario;
-	
+
 	@SuppressWarnings("unused")
 	@Autowired
-    private UsuarioService service;	
-	
-	
+	private UsuarioService service;
+
 	@PostMapping("/cadastrar")
-    public String cadastrar(Model model, Usuario usuario){
-		
-	//	Usuario cadastro = service.calcular(usuario);
-		
-    //model.addAttribute("cadastro",cadastro);
-        return "/chamadas/calculo";
+	public String cadastrar(Model model, Usuario usuario) {
+
+		// Usuario cadastro = service.calcular(usuario);
+
+		// model.addAttribute("cadastro",cadastro);
+		return "/chamadas/calculo";
 	}
 }
