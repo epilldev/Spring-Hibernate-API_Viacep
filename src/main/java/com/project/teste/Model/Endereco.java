@@ -4,7 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Table(name = "ENDERECO")
 public class Endereco extends AbstractEntity<Long> {
 
+		
 	@Column(nullable = false, unique = false)
 	private String logradouro;
 
@@ -33,10 +34,11 @@ public class Endereco extends AbstractEntity<Long> {
 	@Column(nullable = false, unique = false)
 	private String cep;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "usuario_id_fk")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "CPF")
 	private Usuario usuario;
 
+	
 	public Endereco(String logradouro, String numero, String complemento, String bairro, String localidade, String uf,
 			String cep, Usuario usuario) {
 		super();

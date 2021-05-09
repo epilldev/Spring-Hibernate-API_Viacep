@@ -2,8 +2,11 @@ package com.project.teste.Model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -11,6 +14,7 @@ import javax.persistence.Table;
 @Table(name = "USUARIO")
 public class Usuario extends AbstractEntity<Long> {
 
+		
 	@Column(nullable = false, unique = false)
 	private String nome;
 	
@@ -22,7 +26,10 @@ public class Usuario extends AbstractEntity<Long> {
 	
 	@Column(name= "data_nascimento", nullable = false, columnDefinition = "DATE")
 	private LocalDate dataNascimento;
-
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id")
+	private Endereco endereco;
 	
 	
 	

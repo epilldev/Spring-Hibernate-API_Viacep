@@ -10,5 +10,5 @@ import com.project.teste.Model.Endereco;
 public interface iEnderecoService {
 
 	@GetMapping("{cep}/json")
-	Endereco buscarPeloCep(@PathVariable("cep") String cep);
+	Endereco buscarPeloCep(@PathVariable("cep") String cep);	
 }
