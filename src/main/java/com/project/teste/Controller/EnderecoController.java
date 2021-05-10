@@ -1,6 +1,7 @@
 package com.project.teste.Controller;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,8 +45,7 @@ public class EnderecoController {
 		try {
 			if (usuario != null) {
 				if (usuario.isPresent()) {
-					Usuario user = usuario.get();
-					endereco.setUsuario(user);
+					endereco.setUsuario(CPF);
 					repositorio.save(endereco);
 					return new ResponseEntity<>(endereco, HttpStatus.CREATED);
 				}
@@ -67,14 +67,18 @@ public class EnderecoController {
 		return endereco != null ? ResponseEntity.ok().body(endereco) : ResponseEntity.notFound().build();
 
 	}
-	
+
+	@SuppressWarnings("rawtypes")
 	@GetMapping("/buscar")
-	public ResponseEntity<Endereco> buscar(@RequestHeader("CPF") String CPF) {
+	public ResponseEntity<List> buscar(@RequestHeader("CPF") String CPF) {
+		try {
 
-		
-	
+			List<Endereco> list = repositorio.findAllByusuario(CPF);
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		} catch (Exception ex) {
 
-		return  ResponseEntity.notFound().build();
+			return ResponseEntity.notFound().build();
+		}
 
 	}
 }

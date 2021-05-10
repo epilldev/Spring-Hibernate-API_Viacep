@@ -1,11 +1,7 @@
 package com.project.teste.Model;
 
-import java.util.Optional;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -35,13 +31,12 @@ public class Endereco extends AbstractEntity<Long> {
 	@Column(nullable = false, unique = false)
 	private String cep;
 
-	@ManyToOne
-	@JoinColumn(name = "CPF")
-	private Usuario usuario;
+	@Column
+	private String usuario;
 
 	
 	public Endereco(String logradouro, String numero, String complemento, String bairro, String localidade, String uf,
-			String cep, Usuario usuario) {
+			String cep, String usuario) {
 		super();
 		this.logradouro = logradouro;
 		this.numero = numero;
@@ -111,13 +106,12 @@ public class Endereco extends AbstractEntity<Long> {
 		this.cep = cep;
 	}
 
-	public Optional<Usuario> getUsuario() {
-		return Optional.ofNullable(usuario);
-	}
 
-	public void setUsuario(Usuario usuario) {
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-
 
 }

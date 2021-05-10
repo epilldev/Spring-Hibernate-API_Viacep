@@ -1,13 +1,9 @@
 package com.project.teste.Model;
 
 import java.time.LocalDate;
-import java.util.Optional;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import com.project.teste.Controller.UsuarioController;
 
 @SuppressWarnings("serial")
 @Entity
