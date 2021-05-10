@@ -1,13 +1,13 @@
 package com.project.teste.Model;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.project.teste.Controller.UsuarioController;
 
 @SuppressWarnings("serial")
 @Entity
@@ -27,12 +27,8 @@ public class Usuario extends AbstractEntity<Long> {
 	@Column(name= "data_nascimento", nullable = false, columnDefinition = "DATE")
 	private LocalDate dataNascimento;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id")
-	private Endereco endereco;
-	
-	
-	
+	public Usuario(){
+	}	
 	
 	public Usuario(String nome, String email, String cpf, LocalDate dataNascimento) {
 		super();
@@ -73,6 +69,7 @@ public class Usuario extends AbstractEntity<Long> {
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	
+
+
 	
 }

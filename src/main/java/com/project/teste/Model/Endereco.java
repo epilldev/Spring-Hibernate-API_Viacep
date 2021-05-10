@@ -1,6 +1,7 @@
 package com.project.teste.Model;
 
-import javax.persistence.CascadeType;
+import java.util.Optional;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -26,15 +27,15 @@ public class Endereco extends AbstractEntity<Long> {
 	private String bairro;
 
 	@Column(nullable = false, unique = false)
-	private String cidade;
+	private String localidade;
 
 	@Column(nullable = false, unique = false)
-	private String estado;
+	private String uf;
 
 	@Column(nullable = false, unique = false)
 	private String cep;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "CPF")
 	private Usuario usuario;
 
@@ -46,10 +47,12 @@ public class Endereco extends AbstractEntity<Long> {
 		this.numero = numero;
 		this.complemento = complemento;
 		this.bairro = bairro;
-		this.cidade = localidade;
-		this.estado = uf;
+		this.localidade = localidade;
+		this.uf = uf;
 		this.cep = cep;
 		this.usuario = usuario;
+	}
+	public Endereco(){
 	}
 
 	public String getLogradouro() {
@@ -84,20 +87,20 @@ public class Endereco extends AbstractEntity<Long> {
 		this.bairro = bairro;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getLocalidade() {
+		return localidade;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getUf() {
+		return uf;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 
 	public String getCep() {
@@ -108,12 +111,13 @@ public class Endereco extends AbstractEntity<Long> {
 		this.cep = cep;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Optional<Usuario> getUsuario() {
+		return Optional.ofNullable(usuario);
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
 
 }

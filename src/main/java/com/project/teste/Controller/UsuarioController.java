@@ -1,14 +1,16 @@
 package com.project.teste.Controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.project.teste.Exception.RequisicaoNaoEncontradaException;
 import com.project.teste.Model.Usuario;
 import com.project.teste.Repositorio.UsuarioRepositorio;
 
@@ -19,22 +21,58 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepositorio repositorio;
 
-	@PostMapping("/cadastrar")
-	public Usuario cadastrar(@RequestHeader("nome") String nome, @RequestHeader("email") String email,
-			@RequestHeader("CPF") String CPF, @RequestHeader("dataNascimento") LocalDate dataNascimento) {
+	@PutMapping("/cadastrar")
+	public ResponseEntity<Usuario> cadastrar(@RequestHeader("nome") String nome, @RequestHeader("email") String email,
+			@RequestHeader("CPF") String CPF, @RequestHeader("dataNascimento") String dataNascimento) {
 
-		Usuario cadastro = new Usuario(nome, email, CPF, dataNascimento);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate date = LocalDate.parse(dataNascimento, formatter);
 
-		return repositorio.save(cadastro);
-	}
+		try {
+			Usuario cadastro = new Usuario(nome, email, CPF, date);
 
-	@GetMapping("/buscar")
-	public Usuario buscarPeloId(@RequestHeader("CPF") Long CPF) {
-		if (CPF != null) {
-			return repositorio.findById(CPF).orElseThrow(() -> new RequisicaoNaoEncontradaException("Usuario", "CPF", CPF));
-		} 
-		else {
-			return null;
+			cadastro = repositorio.save(cadastro);
+
+			if (cadastro != null) {
+				return new ResponseEntity<>(cadastro, HttpStatus.CREATED);
+			}
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
+		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
+
+	
+	
+	
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	try {
+		if (CPF != null) {
+			return new ResponseEntity<Usuario>(repositorio.findByCPF(CPF), HttpStatus.OK);
+		}
+	} catch (Exception ex) {
+		return new ResponseEntity<Usuario>(repositorio.findById(CPF) .orElseThrow(() -> new
+					 RequisicaoNaoEncontradaException("Usuario", "CPF", CPF)), HttpStatus.BAD_REQUEST);
+		
+	}
+	return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+*/

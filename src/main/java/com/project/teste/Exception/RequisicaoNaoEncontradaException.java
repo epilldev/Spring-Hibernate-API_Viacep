@@ -15,8 +15,7 @@ public class RequisicaoNaoEncontradaException extends RuntimeException {
 
 	    public RequisicaoNaoEncontradaException(String entidade, String atributo, Object valor) {
 	        
-	    super(String.format("%s não econtrado com %s : '%s'", entidade, atributo, valor));
-	
+	    super(String.format("%s não encontrado com %s : '%s'", entidade, atributo, valor));	
 	    
 	        this.entidade = entidade;
 	        this.atributo = atributo;
