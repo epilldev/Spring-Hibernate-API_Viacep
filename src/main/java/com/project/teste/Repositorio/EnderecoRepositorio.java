@@ -6,6 +6,7 @@ import com.project.teste.Model.Endereco;
 
 public interface EnderecoRepositorio extends JpaRepository<Endereco, String> {
 	
-	List<Endereco> findAllByusuario(String usuario);
+	
+	List<Endereco> findAllByUsuarioCPF(String CPF);
 
 }

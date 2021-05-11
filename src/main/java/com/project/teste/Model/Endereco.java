@@ -2,6 +2,8 @@ package com.project.teste.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -9,7 +11,6 @@ import javax.persistence.Table;
 @Table(name = "ENDERECO")
 public class Endereco extends AbstractEntity<Long> {
 
-		
 	@Column(nullable = false, unique = false)
 	private String logradouro;
 
@@ -31,12 +32,20 @@ public class Endereco extends AbstractEntity<Long> {
 	@Column(nullable = false, unique = false)
 	private String cep;
 
-	@Column
-	private String usuario;
+	@ManyToOne
+	@JoinColumn(name = "Usuario_CPF")
+	public Usuario usuario;
 
-	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	public Endereco(String logradouro, String numero, String complemento, String bairro, String localidade, String uf,
-			String cep, String usuario) {
+			String cep) {
 		super();
 		this.logradouro = logradouro;
 		this.numero = numero;
@@ -45,9 +54,9 @@ public class Endereco extends AbstractEntity<Long> {
 		this.localidade = localidade;
 		this.uf = uf;
 		this.cep = cep;
-		this.usuario = usuario;
 	}
-	public Endereco(){
+
+	public Endereco() {
 	}
 
 	public String getLogradouro() {
@@ -104,14 +113,6 @@ public class Endereco extends AbstractEntity<Long> {
 
 	public void setCep(String cep) {
 		this.cep = cep;
-	}
-
-
-	public String getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
 	}
 
 }

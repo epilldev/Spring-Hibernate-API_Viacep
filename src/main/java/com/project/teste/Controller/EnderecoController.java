@@ -45,7 +45,8 @@ public class EnderecoController {
 		try {
 			if (usuario != null) {
 				if (usuario.isPresent()) {
-					endereco.setUsuario(CPF);
+					endereco.setUsuario(usuario.get());
+					endereco.usuario.setCPF(CPF);
 					repositorio.save(endereco);
 					return new ResponseEntity<>(endereco, HttpStatus.CREATED);
 				}
@@ -73,7 +74,7 @@ public class EnderecoController {
 	public ResponseEntity<List> buscar(@RequestHeader("CPF") String CPF) {
 		try {
 
-			List<Endereco> list = repositorio.findAllByusuario(CPF);
+			List<Endereco> list = repositorio.findAllByUsuarioCPF(CPF);
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		} catch (Exception ex) {
 
