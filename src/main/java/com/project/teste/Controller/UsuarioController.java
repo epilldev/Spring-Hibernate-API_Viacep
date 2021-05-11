@@ -19,6 +19,9 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepositorio repositorio;
 
+	/*
+	 * Cadastrar um Usuário
+	 */
 	@PutMapping("/cadastrar")
 	public ResponseEntity<Usuario> cadastrar(@RequestHeader("nome") String nome, @RequestHeader("email") String email,
 			@RequestHeader("CPF") String CPF, @RequestHeader("dataNascimento") String dataNascimento) {

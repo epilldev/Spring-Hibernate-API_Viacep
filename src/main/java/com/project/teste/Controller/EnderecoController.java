@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.project.teste.Exception.RequisicaoFailedException;
+import com.project.teste.Exception.RequisicaoNaoEncontradaException;
 import com.project.teste.Interface.iEnderecoService;
 import com.project.teste.Model.Endereco;
 import com.project.teste.Model.Usuario;
@@ -29,6 +32,10 @@ public class EnderecoController {
 
 	@Autowired
 	private UsuarioRepositorio repositorioUser;
+	
+	/*
+	 * Cadastrar um Endereço
+	 */
 
 	@SuppressWarnings({})
 	@PutMapping("/cadastrar")
@@ -56,6 +63,10 @@ public class EnderecoController {
 		}
 		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
+	
+	/*
+	 * Buscar um Endereço via API ViaCep
+	 */
 
 	@GetMapping("/getCep")
 	public ResponseEntity<Endereco> getCep(@RequestHeader("cep") String cep,
@@ -66,19 +77,25 @@ public class EnderecoController {
 		endereco.setComplemento(complemento);
 
 		return endereco != null ? ResponseEntity.ok().body(endereco) : ResponseEntity.notFound().build();
-
 	}
 
-	@SuppressWarnings("rawtypes")
+	/*
+	 * Buscar todos os Endereços de um Usuário pelo CPF
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("/buscar")
-	public ResponseEntity<List> buscar(@RequestHeader("CPF") String CPF) {
+	public ResponseEntity buscar(@RequestHeader("CPF") String CPF) {
 		try {
-
 			List<Endereco> list = repositorio.findAllByUsuarioCPF(CPF);
-			return new ResponseEntity<>(list, HttpStatus.OK);
+			if (!list.isEmpty()) {
+				return new ResponseEntity<>(list, HttpStatus.OK);
+			}
+			return new ResponseEntity(new RequisicaoNaoEncontradaException("Usuario", "CPF", CPF),
+					HttpStatus.NOT_FOUND);
+
 		} catch (Exception ex) {
 
-			return ResponseEntity.notFound().build();
+			return new ResponseEntity(new RequisicaoFailedException("usuario", "CPF", CPF), HttpStatus.BAD_REQUEST);
 		}
 
 	}
