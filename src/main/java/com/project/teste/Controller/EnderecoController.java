@@ -1,102 +1,58 @@
 package com.project.teste.Controller;
 
-import java.util.Optional;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.project.teste.Dto.EnderecoRequest;
+import com.project.teste.Dto.EnderecoResponse;
+import com.project.teste.Service.EnderecoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.project.teste.Exception.RequisicaoFailedException;
-import com.project.teste.Exception.RequisicaoNaoEncontradaException;
-import com.project.teste.Interface.iEnderecoService;
-import com.project.teste.Model.Endereco;
-import com.project.teste.Model.Usuario;
-import com.project.teste.Repositorio.EnderecoRepositorio;
-import com.project.teste.Repositorio.UsuarioRepositorio;
+import java.util.List;
 
 @RestController
-@RequestMapping("/endereco")
+@RequestMapping("/enderecos")
 public class EnderecoController {
 
-	@Autowired
-	private iEnderecoService cepService;
+    private final EnderecoService enderecoService;
 
-	@Autowired
-	private EnderecoRepositorio repositorio;
+    public EnderecoController(EnderecoService enderecoService) {
+        this.enderecoService = enderecoService;
+    }
 
-	@Autowired
-	private UsuarioRepositorio repositorioUser;
-	
-	/*
-	 * Cadastrar um Endereço
-	 */
+    /*
+     * Criar endereço
+     */
+    @PostMapping
+    public ResponseEntity<EnderecoResponse> criar(@RequestBody EnderecoRequest request) {
 
-	@SuppressWarnings({})
-	@PutMapping("/cadastrar")
-	public ResponseEntity<Endereco> cadastrar(@RequestHeader("cep") String cep,
-			@RequestHeader("complemento") String complemento, @RequestHeader("numero") String numero,
-			@RequestHeader("CPF") String CPF) {
+        EnderecoResponse response = enderecoService.criarEndereco(request);
 
-		Endereco endereco = cepService.buscarPeloCep(cep);
-		endereco.setNumero(numero);
-		endereco.setComplemento(complemento);
-		String id = CPF;
-		Optional<Usuario> usuario = repositorioUser.findByCPF(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
 
-		try {
-			if (usuario != null) {
-				if (usuario.isPresent()) {
-					endereco.setUsuario(usuario.get());
-					endereco.usuario.setCPF(CPF);
-					repositorio.save(endereco);
-					return new ResponseEntity<>(endereco, HttpStatus.CREATED);
-				}
-			}
-		} catch (Exception ex) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-	}
-	
-	/*
-	 * Buscar um Endereço via API ViaCep
-	 */
+    /*
+     * Buscar endereço por CEP
+     */
+    @GetMapping("/cep/{cep}")
+    public ResponseEntity<EnderecoResponse> buscarPorCep(
+            @PathVariable String cep,
+            @RequestParam String numero,
+            @RequestParam(required = false) String complemento) {
 
-	@GetMapping("/getCep")
-	public ResponseEntity<Endereco> getCep(@RequestHeader("cep") String cep,
-			@RequestHeader("complemento") String complemento, @RequestHeader("numero") String numero) {
+        EnderecoResponse response = enderecoService.buscarPorCep(cep, numero, complemento);
 
-		Endereco endereco = cepService.buscarPeloCep(cep);
-		endereco.setNumero(numero);
-		endereco.setComplemento(complemento);
+        return ResponseEntity.ok(response);
+    }
 
-		return endereco != null ? ResponseEntity.ok().body(endereco) : ResponseEntity.notFound().build();
-	}
+    /*
+     * Buscar endereços por CPF
+     */
+    @GetMapping
+    public ResponseEntity<List<EnderecoResponse>> buscarPorCpf(
+            @RequestParam String cpf) {
 
-	/*
-	 * Buscar todos os Endereços de um Usuário pelo CPF
-	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/buscar")
-	public ResponseEntity buscar(@RequestHeader("CPF") String CPF) {
-		try {
-			List<Endereco> list = repositorio.findAllByUsuarioCPF(CPF);
-			if (!list.isEmpty()) {
-				return new ResponseEntity<>(list, HttpStatus.OK);
-			}
-			return new ResponseEntity(new RequisicaoNaoEncontradaException("Usuario", "CPF", CPF),
-					HttpStatus.NOT_FOUND);
+        List<EnderecoResponse> lista = enderecoService.buscarPorCpf(cpf);
 
-		} catch (Exception ex) {
-
-			return new ResponseEntity(new RequisicaoFailedException("usuario", "CPF", CPF), HttpStatus.BAD_REQUEST);
-		}
-
-	}
+        return ResponseEntity.ok(lista);
+    }
 }
