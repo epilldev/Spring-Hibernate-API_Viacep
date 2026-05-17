@@ -1,9 +1,9 @@
-package com.project.teste.Service;
+package com.project.teste.service;
 
-import com.project.teste.Dto.UsuarioRequest;
-import com.project.teste.Dto.UsuarioResponse;
-import com.project.teste.Model.Usuario;
-import com.project.teste.Repositorio.UsuarioRepositorio;
+import com.project.teste.dto.UsuarioRequest;
+import com.project.teste.dto.UsuarioResponse;
+import com.project.teste.entity.Usuario;
+import com.project.teste.repository.UsuarioRepositorio;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,6 +1,6 @@
-package com.project.teste.Dto;
+package com.project.teste.dto;
 
-import com.project.teste.Model.Endereco;
+import com.project.teste.entity.Endereco;
 
 public class EnderecoResponse {
 

@@ -1,8 +1,8 @@
-package com.project.teste.Controller;
+package com.project.teste.controller;
 
-import com.project.teste.Dto.UsuarioRequest;
-import com.project.teste.Dto.UsuarioResponse;
-import com.project.teste.Service.UsuarioService;
+import com.project.teste.dto.UsuarioRequest;
+import com.project.teste.dto.UsuarioResponse;
+import com.project.teste.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

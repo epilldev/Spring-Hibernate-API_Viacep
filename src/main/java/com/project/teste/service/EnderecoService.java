@@ -1,14 +1,14 @@
-package com.project.teste.Service;
+package com.project.teste.service;
 
 
-import com.project.teste.Dto.EnderecoRequest;
-import com.project.teste.Dto.EnderecoResponse;
-import com.project.teste.Exception.RequisicaoNaoEncontradaException;
-import com.project.teste.Interface.iEnderecoService;
-import com.project.teste.Model.Endereco;
-import com.project.teste.Model.Usuario;
-import com.project.teste.Repositorio.EnderecoRepositorio;
-import com.project.teste.Repositorio.UsuarioRepositorio;
+import com.project.teste.dto.EnderecoRequest;
+import com.project.teste.dto.EnderecoResponse;
+import com.project.teste.entity.Endereco;
+import com.project.teste.entity.Usuario;
+import com.project.teste.exception.RequisicaoNaoEncontradaException;
+import com.project.teste.interfaces.iEnderecoService;
+import com.project.teste.repository.EnderecoRepositorio;
+import com.project.teste.repository.UsuarioRepositorio;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

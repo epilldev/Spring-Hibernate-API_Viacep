@@ -1,8 +1,8 @@
-package com.project.teste.Controller;
+package com.project.teste.controller;
 
-import com.project.teste.Dto.EnderecoRequest;
-import com.project.teste.Dto.EnderecoResponse;
-import com.project.teste.Service.EnderecoService;
+import com.project.teste.dto.EnderecoRequest;
+import com.project.teste.dto.EnderecoResponse;
+import com.project.teste.service.EnderecoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
