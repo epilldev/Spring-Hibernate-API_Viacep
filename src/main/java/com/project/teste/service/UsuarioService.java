@@ -21,7 +21,7 @@ public class UsuarioService {
 
         usuario.setNome(request.getNome());
         usuario.setEmail(request.getEmail());
-        usuario.setCPF(request.getCpf());
+        usuario.setCpf(request.getCpf());
         usuario.setDataNascimento(request.getDataNascimento());
 
         usuario = repositorio.save(usuario);
@@ -30,7 +30,7 @@ public class UsuarioService {
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),
-                usuario.getCPF(),
+                usuario.getCpf(),
                 usuario.getDataNascimento()
         );
     }

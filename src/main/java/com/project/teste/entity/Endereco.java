@@ -4,45 +4,45 @@ import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "ENDERECO")
+@Table(name = "endereco")
 public class Endereco extends AbstractEntity<Long> {
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String logradouro;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String numero;
 
-    @Column(nullable = false, unique = false)
+    @Column
     private String complemento;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String bairro;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String localidade;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false, length = 2)
     private String uf;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false, length = 8)
     private String cep;
 
     @ManyToOne
-    @JoinColumn(name = "Usuario_CPF")
-    public Usuario usuario;
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Endereco() {
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Endereco(String logradouro, String numero, String complemento, String bairro, String localidade, String uf,
+    public Endereco(String logradouro,
+                    String numero,
+                    String complemento,
+                    String bairro,
+                    String localidade,
+                    String uf,
                     String cep) {
-        super();
+
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -50,9 +50,6 @@ public class Endereco extends AbstractEntity<Long> {
         this.localidade = localidade;
         this.uf = uf;
         this.cep = cep;
-    }
-
-    public Endereco() {
     }
 
     public String getLogradouro() {
@@ -111,4 +108,11 @@ public class Endereco extends AbstractEntity<Long> {
         this.cep = cep;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }
